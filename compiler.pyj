@@ -1,3 +1,6 @@
+# Code from Charles Law
+# Ported to RapydScript
+
 import utils
 import ast
 import output
