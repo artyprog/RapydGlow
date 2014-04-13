@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RapydGlow</title>
+      
+      <script src=static/codemirror/lib/codemirror.js></script>
+      <script src=static/codemirror/mode/python/python.js></script>
+      <script src=static/codemirror/mode/javascript/javascript.js></script>
+      <link href=static/css/main.css rel=stylesheet />
+      <link rel=stylesheet href=static/codemirror/lib/codemirror.css>
+      <link rel=stylesheet href=static/codemirror/theme/ambiance.css>
+      <link rel=stylesheet href=static/css/w2ui.css>
+      
+    <style type=text/css>
+      .CodeMirror {
+        border: 1px solid black;
+        height: 100%;
+        width: 45%;
+        float: left;
+      }
+      .cm-s-output {
+        border-left: 10px;
+      }
+    
+     body {
+        margin:0;
+        padding:0;
+            background:#202020;
+     }
+     
+    </style>
+      <script type="text/javascript" src="static/js/jquery.js"></script>
+      <script src="static/js/w2ui.js"></script>
+      <script type="text/javascript" src="static/rapydscript/compiler.js"></script>
+      <script src="static/js/FileSaver.js" type="text/javascript"></script>
+      <script src="static/js/canvas-toBlob.js " type="text/javascript"></script>
+      <script src="static/js/glow.1.0.min.js" type="text/javascript"></script>
+      <!-- operators overloading -->
+      <script src="static/js/papercomp.js" type="text/javascript"></script>   
+      <!-- StreamLine-->
+      <script type="text/javascript" src="static/js/transform-all.js"></script>
+  </head>
+  <body>
+       <div id="layout" style="position: absolute; top:1px; left: 1px; bottom: 1px; right: 1px;"></div>
+      <script type="text/plain" id="menu">
+          <div style="color:rgb(250,165,0);padding-left:36px;background:#202020;height:25px;padding-top:2px;">
+              RapydGlow <span style="font-size:0.75em;font-style:italic;color:white;">
+            <a  style="text-decoration:none;color:white"  href="https://bitbucket.org/davidscherer/glowscript">GlowScript</a> from RapydScript
+                      </span>
+       </div>
+       <div>
+            <ul class="menu">
+                <li><div class="itemmenu" style="color:black;">&nbsp;Samples :</div>
+                    <select id="select" onchange="Application.loadSample($(this))">
+                        <option></option> 
+                        <option>bounce-cb.py</option> 
+                        <option>binarystars.py</option> 
+                        <option>synchro.py</option> 
+                        <option>box.py</option>                  
+                    </select>
+                </li>
+                <li>
+                    <button onclick="run()" id="run">Run</button></li>
+                <li>
+                    <button onclick="loadScript()">Load Script</button></li>
+                <li>
+                    <button onclick="saveScript()">Save Script</button></li>                
+                <li>
+                    <button  onclick="clearCanvas()">Clear Canvas</li>
+                <li>
+                    <button  onclick="about()">About - Credits</li>  
+                
+            </ul>
+        </div>
+      </script>
+      
+      <script type="text/plain" id="contenteditor"> 
+      <textarea>  
+b = box(color=color.red)
+while true:
+    b.rotate(angle=0.01, axis=vec(0,-1,0))
+    rate(200,wait)   
+  
+      </textarea>      
+      </script>
+
+      <script type="text/plain" id="contentcanvas">
+           <div id="glowscript" class="glowscript">                
+            </div>
+               <button onclick="reset()" id="reset" style="display:none">Reset</button>
+          
+      </script>
+
+      <script type="text/plain" id ="contentbottom">
+          <div style="margin:0;padding:0;background:#202020;color:white;height:100%">
+              Bottom
+          </div>
+      </script>
+       
+      <script type="text/plain" id="contenterror">
+          <div style="color:red; font-size:12px;padding:6px;" id="texterror">
+              Error
+          </div>
+      </script>                       
+
+<script>
+$(function () {
+    var pstyle = 'border: 1px solid #202020; padding: 0px; background:#202020;';
+  $('#layout').w2layout({
+    name: 'layout',
+    panels: [
+            { type: 'top',size: 48,  resizable: false, content: $("#menu").html() },
+            { type: 'left',size:'49.5%', resizable: true,  content: 'left',hidden:true },
+            { type: 'main',style:pstyle,  content: $('#contenteditor').html() },
+            { type: 'preview',size:200, resizable: true,  content: 'preview',hidden:true },
+            { type: 'right',size:'50%',style:pstyle, resizable: true, content: $('#contentcanvas').html()  },
+            { type: 'bottom',size:100 , resizable: true, content: $('#contentbottom').html(),hidden:true  }
+    ]
+  });
+});
+</script>
+<script>  
+    $(function () { 
+        var mainscript = "static/rapydscript/main.pyj"
+        $.get(mainscript, function(r) {
+            eval(compile(r))
+        })
+        eval(compile($("#app").html()));
+    });
+    
+   </script>
+
+<!-- Application -->
+<script type=text/rapydscript id="app">
+run = def ():
+    Application.run()
+
+loadScript = def ():
+    alert("loasScript")
+
+
+saveScript = def ():
+    alert("saveScript")
+
+clearCanvas = def ():
+    alert("ClearCanvas")
+
+about = def ():
+    alert("About")
+
+
+def setEditor():
+    editor  = CodeMirror.fromTextArea(document.getElementsByTagName("textarea")[0],{
+            mode: 'text/x-python',
+            lineNumbers:true,
+            indentUnit: 4,
+            theme: "ambiance"
+        }) 
+    editor.setSize("100%","100%");
+
+def setupScene():
+    window.__context = { glowscript_container: $("#glowscript").removeAttr("id") };
+    window.scene = canvas();
+    
+setEditor()
+setupScene()
+
+</script>
+
+
+    <div style="display:none">
+        <input  id="saveimage"  type="file"  nwsaveas/>
+        <input  id="savescript"  type="file"  nwsaveas/>
+        <input  id="loadFile"  type="file"  />
+    </div>
+  </body>
+</html>
+

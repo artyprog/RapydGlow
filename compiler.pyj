@@ -1,0 +1,24 @@
+import utils
+import ast
+import output
+import parse
+
+
+compile = def(src):
+    rs_options = {}
+
+    output_opts = {
+    "beautify":True,
+    "private_scope":False,
+    "omit_baselib": False
+    }
+
+    output = OutputStream(output_opts);
+
+    TOPLEVEL = parse(src + '\n', rs_options)
+    TOPLEVEL.print(output)
+
+    result = output.get()
+
+    return result
+

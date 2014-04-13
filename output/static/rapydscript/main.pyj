@@ -1,0 +1,17 @@
+_Application = def ():
+    run = def () :
+        hideObjects()
+
+    hideObjects = def ():
+        objects = scene.objects
+        if objects == 0: 
+            console.log("nothing")
+            return
+        console.log("ok")
+
+    return {
+        run : run
+    }
+
+
+Application = _Application()

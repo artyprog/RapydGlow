@@ -1,0 +1,1 @@
+../../bin/rapydscript compiler.pyj -o compiler.js -b -p && mv compiler.js output/
