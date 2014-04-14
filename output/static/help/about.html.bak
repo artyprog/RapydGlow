@@ -1,0 +1,93 @@
+<style>
+    a.link {
+        text-decoration:none;
+        color : #202020;
+       font-size: 12px;
+      font-family: Verdana;     
+    }
+    
+    a.credit {
+      color:#202020;
+ 
+    }
+    
+    .divlink {
+        
+        postion:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        border-bottom:1px solid #202020;
+        text-align:right;
+        padding-right:15px;
+        padding-bottom:3px;
+        
+    }
+    
+    .content {
+        margin-top:20px;
+        font-family: Verdana; 
+        color: #020202;
+        padding: 5px;
+        padding-left:31px;
+        font-size: 12px;
+        line-height: 1.6em;
+        width:95%;
+       
+    }
+    
+    p {
+       background:#fefefe;  
+    }
+</style>
+
+<script>
+    function loadTutor(nameTutor) {
+    	w2ui["layout"].load("left","../static/help/"+ nameTutor +".html");
+    }
+    
+    function hideAbout() {
+    	Application.hidePanel('left');
+    	Application.showPanel("main");
+    	Application.showPanel("right");
+    	
+    }
+</script>
+<!--
+<ul>
+    <li><a href='#' onclick="loadTutor('tutorial1')">Tutor1</a></li>
+    <li><a href='javascript:w2ui["layout"].load("left","../static/help/tutorial2.html")'>Tutor1</a></li>
+    <li><a href='javascript:w2ui["layout"].load("left","../static/help/tutorial3.html")'>Tutor1</a></li>
+    <li><a href='javascript:w2ui["layout"].load("left","../static/help/tutorial4.html")'>Tutor1</a></li>
+    <li><a href='javascript:w2ui["layout"].load("left","../static/help/tutorial5.html")'>Tutor1</a></li>
+</ul>
+-->
+<div class="divlink">
+    <a href="#" onclick="hideAbout()" class="link">Close</a>
+</div>
+
+<div class="content">
+    RapydGlow is a tool which integrates <a href="http://www.glowscript.org/">GlowScript</a> in order to use <a href="http://rapydscript.pyjeon.com/">RapydScript</a> instead of Javascript<br />
+    
+    Please, go and visit RapydScript and GlowScript to know more about them.<br />
+    
+    Not enough to use a nice language, RapydGlow allows operators overloading.<br />
+    Jürg Lehni has exposed a nice way to do this on his blog <a href="http://scratchdisk.com/posts/operator-overloading">Implementing Operator Overloading in JavaScript</a>
+    <br /><br />
+    <br /><br />
+    Last addition, 'synchronous loop' with StreamLineJS from Bruno Jouhier
+    
+Credits
+   <ul>
+       <li class="credit">Alexander Tsepkov - <a href="https://bitbucket.org/pyjeon/rapydscript" class="credit">RapydScript</a></li>
+       <li class="credit">Charles Law - <a href="http://pyjeon.pythonanywhere.com/static/rapydscript_online/index.html" class="credit">RapydScript online</a></li>
+       <li class="credit">Bruce Sherwood - <a href="http://www.glowscript.org/">GlowScript</a></li>
+       <li class="credit">David Scherer - <a href="http://www.glowscript.org/">GlowScript</a></li>
+       <li class="credit">Bruno Jouhier - <a href="https://github.com/Sage/streamlinejs">StreamLine</a></li>   
+       <li class="credit">Marijn Haverbeke - <a href="https://github.com/marijnh">Acorn.js</a></li>      
+       <li class="credit">Jürg Lehni - <a href="http://scratchdisk.com/posts/operator-overloading">Opertors overloading (PaperScript)</a></li>
+       <li class="credit">Vitali Malinouski - <a href="http://w2ui.com/web/">W2UI</a></li>
+   </ul>
+    <br />
+    Other tools used : CodeMirror, JQuery  
+</div>

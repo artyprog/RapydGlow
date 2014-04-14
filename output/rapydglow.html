@@ -61,15 +61,15 @@
                     </select>
                 </li>
                 <li>
-                    <button onclick="run()" id="run">Run</button></li>
+                    <button onclick="Application.run()" id="run">Run</button></li>
                 <li>
-                    <button onclick="loadScript()">Load Script</button></li>
+                    <button onclick="Application.loadScript()">Load Script</button></li>
                 <li>
-                    <button onclick="saveScript()">Save Script</button></li>                
+                    <button onclick="Application.saveScript()">Save Script</button></li>                
                 <li>
-                    <button  onclick="clearCanvas()">Clear Canvas</li>
+                    <button  onclick="Application.clearCanvas()">Clear Canvas</li>
                 <li>
-                    <button  onclick="about()">About - Credits</li>  
+                    <button  onclick="Application.displayAbout()">About - Credits</li>  
                 
             </ul>
         </div>
@@ -120,52 +120,30 @@ $(function () {
   });
 });
 </script>
+
+<script>
+   // from StackOverFlow 
+    function clearAllTimeouts(){
+        if (typeof clearAllTimeouts.last == 'undefined' ) {
+            clearAllTimeouts.last = setTimeout("||void",0); // Opera || IE other browsers accept "" or "void"
+        }
+        var mx = setTimeout("||void",0);
+        for(var i=clearAllTimeouts.last;i<=mx;i++){
+            clearTimeout(i);
+        }
+        clearAllTimeouts.last = i;
+    }
+</script>
+
 <script>  
     $(function () { 
         var mainscript = "static/rapydscript/main.pyj"
         $.get(mainscript, function(r) {
             eval(compile(r))
         })
-        eval(compile($("#app").html()));
     });
     
    </script>
-
-<!-- Application -->
-<script type=text/rapydscript id="app">
-run = def ():
-    Application.run()
-
-loadScript = def ():
-    alert("loasScript")
-
-
-saveScript = def ():
-    alert("saveScript")
-
-clearCanvas = def ():
-    alert("ClearCanvas")
-
-about = def ():
-    alert("About")
-
-
-def setEditor():
-    editor  = CodeMirror.fromTextArea(document.getElementsByTagName("textarea")[0],{
-            mode: 'text/x-python',
-            lineNumbers:true,
-            indentUnit: 4,
-            theme: "ambiance"
-        }) 
-    editor.setSize("100%","100%");
-
-def setupScene():
-    window.__context = { glowscript_container: $("#glowscript").removeAttr("id") };
-    window.scene = canvas();
-    
-setEditor()
-setupScene()
-
 </script>
 
 

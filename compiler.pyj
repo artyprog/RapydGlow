@@ -6,7 +6,6 @@ import ast
 import output
 import parse
 
-
 compile = def(src):
     rs_options = {}
 

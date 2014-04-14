@@ -1,17 +1,96 @@
 _Application = def ():
-    run = def () :
+
+    def run () :
         hideObjects()
 
-    hideObjects = def ():
+        selection = document.getElementById("select").value;
+        
+        $("#reset").css("display","block");
+        $("canvas").css("display","block");  
+        
+        hidePanel('bottom')
+        hidePanel("left");
+        showPanel('right');
+
+        code = editor.getValue().replace("wait","_")
+        resultrapyd = compile(code)
+        rescomp = papercompile(resultrapyd)
+        stream = Streamline.transform(rescomp)
+        Function(stream)()
+
+    def loadScript ():
+        alert("loading")
+
+    def saveScript ():
+        alert("saving")
+
+    def clearCanvas ():
+        hideObjects()
+
+    def displayAbout ():
+        w2ui['layout'].load('left',
+                            '../output/static/help/about.html','slide-left',
+                             def ():
+                                 hidePanel("right")
+                                 showPanel('left')
+                           )
+
+    def hidePanel (name):
+        w2ui['layout'].hide(name)
+
+    def showPanel (name):
+        w2ui['layout'].show(name)
+
+    def hideObjects ():
+        clearAllTimeouts()
+        editor.focus()
+        
         objects = scene.objects
-        if objects == 0: 
-            console.log("nothing")
+        
+        if len(objects) == 0: 
             return
-        console.log("ok")
+        
+        for i in range(len(objects)):
+           objects[i].visible = False
+
+        $("#reset").css("display","none");  
+        $("canvas").css("display","none");
+        
+
+    def setEditor ():
+        nonlocal editor,scene
+        editor  = CodeMirror.fromTextArea(document.getElementsByTagName("textarea")[0],{
+            mode: 'text/x-python',
+            lineNumbers:true,
+            indentUnit: 4,
+            theme: "ambiance"
+        }) 
+        editor.setSize("100%","100%");
+
+    def setupScene ():
+        window.__context = { glowscript_container: $("#glowscript").removeAttr("id") };
+        window.scene = canvas();
+  
+    def startinit(r):
+        console.log(r)
+        return r
+
+    @startinit
+    def start ():
+        setEditor()
+        setupScene()
 
     return {
-        run : run
+        run : run,
+        loadScript: loadScript,
+        saveScript: saveScript,
+        clearCanvas: clearCanvas,
+        displayAbout: displayAbout,
+        hidePanel : hidePanel,
+        showPanel : showPanel,
+        hideObjects : hideObjects,
+        start : start
     }
 
-
 Application = _Application()
+Application.start()
